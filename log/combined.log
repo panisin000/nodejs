@@ -1,0 +1,2 @@
+{"level":"error","message":{"companyName":"ODDS","jobTille":"Frontend Dev","level":"7Senior"},"service":"app-service"}
+{"issues":[{"code":"invalid_type","expected":"string","message":"Required","path":["jobTitle"],"received":"undefined"}],"level":"error","name":"ZodError","service":"app-service"}

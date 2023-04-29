@@ -1,17 +1,24 @@
 import express from "express";
-import { auth } from "../middleware";
+import { auth, logBody } from "../middleware";
 import prisma from "../db";
 import z from "zod";
+import asyncHandler from "express-async-handler";
+import logger from "../util/logger";
 
 const router = express.Router();
 
-router.get("/profiles", auth, async (req, res, next) => {
-  try {
+router.get(
+  "/profiles",
+  auth,logBody,
+  asyncHandler(async (req, res, next) => {
     const profile = await prisma.studentProfile.findUnique({
       where: {
         userId: req.user.id,
       },
     });
+
+    throw new Error("Pongneng err!");
+
     const courses = await prisma.studentOnCourse.findMany({
       where: {
         userId: req.user.id,
@@ -24,11 +31,8 @@ router.get("/profiles", auth, async (req, res, next) => {
       profile,
       courses,
     });
-  } catch (err) {
-    console.error(err);
-    next(err);
-  }
-});
+  })
+);
 
 const profileSchema = z.object({
   companyName: z.string(),
@@ -36,12 +40,12 @@ const profileSchema = z.object({
   level: z.string(),
 });
 
-router.put("/profiles", auth, async (req, res, next) => {
+router.put("/profiles", auth,logBody, async (req, res, next) => {
   try {
     const { companyName, jobTitle, level } = profileSchema.parse(req.body);
     const profile = await prisma.studentProfile.upsert({
       where: {
-        id: req.user.id,
+        userId: req.user.id,
       },
       update: {
         companyName: companyName,
@@ -59,7 +63,7 @@ router.put("/profiles", auth, async (req, res, next) => {
       profile,
     });
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     next(err);
   }
 });

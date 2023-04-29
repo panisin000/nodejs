@@ -9,7 +9,7 @@ npm i -D @types/express
 npm i prisma
 npx prisma init
 
-npx ts-node prisma-test.ts 
+npx ts-node prisma-test.ts
 
 middleware => `ทำงานที่เป็น common ทำงานคล้ายกับ handler เลย แต่ handler มักจะเป็นตัวสุดท้ายของ business proj
 
@@ -18,8 +18,6 @@ npx prisma format
 npx prisma migrate dev
 
 npx prisma migrate reset //-> reset db
-
-
 
 create db
 docker-compose.yml
@@ -120,15 +118,13 @@ JWT
 HMACSha256( Base64URLEncode(header) +"."+Base64URLEncode(Payload)+Base64URLEncode(header) +"."+Base64URLEncode(Payload))
 Hash Mac
 
-
 npm i jsonwebtoken
 npm i bcrypt
 
-
 http status code
 200 -> ok
-201 -> Created 
-202 -> Created without body 
+201 -> Created
+202 -> Created without body
 400 -> Client Error
 401 -> Unathotize
 403 -> Prohibit
@@ -136,5 +132,40 @@ http status code
 422 -> Invaid Body
 500 -> Server Error
 
-
 npm i zod
+
+## Error handling
+
+npm i express-async-handler => Error handling ไม่ต้อง try catch แทนที่ try catch
+
+- ไม่ต้อง focus unexpected error
+- ต้องมี error เหมืิอนกันหมด
+
+## logging request
+
+npm i morgan
+npm i @types/morgan -D
+
+## logging business logic wa
+
+npm install winston
+
+## testing
+automated 
+npm i -D jest
+npm i -D @types/jest
+npm i -D supertest
+npm i -D  @types/supertest
+npm install -D @jest/globals
+npm i -D supertest @types/supertest jest @types/jest ts-jest
+npx ts-jest config:init
+
+npm run test  => npm test -- --runInBand
+
+## deploy
+npm i pm2 -g
+pm2 start server.js --name course-api
+
+
+ docker build -t c0
+

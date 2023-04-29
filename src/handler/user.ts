@@ -1,7 +1,7 @@
 import express from "express";
 import prisma from "../db";
 import bcrypt from "bcrypt";
-import { generateToken } from "../until/token";
+import { generateToken } from "../util/token";
 import { auth } from "../middleware";
 
 const router = express.Router();
@@ -43,7 +43,7 @@ router.post("/login", async (req, res, next) => {
             return;
         }
         const valid = await bcrypt.compare(password, found.password);
-        
+
         if (!valid) {
             res.status(401).json({
                 message: "unauthorized",

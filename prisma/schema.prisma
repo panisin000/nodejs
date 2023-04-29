@@ -35,6 +35,7 @@ model Course {
   studentOnCourse StudentOnCourse[]
 }
 
+
 // many to many
 
 enum Role {
@@ -49,4 +50,5 @@ model StudentOnCourse {
   user     User   @relation(fields: [userId], references: [id])
   courseId String
   course   Course @relation(fields: [courseId], references: [id])
+  
 }

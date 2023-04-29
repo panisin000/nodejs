@@ -3,6 +3,8 @@ import router from "./handler/user";
 import studentRouter from "./handler/student";
 import profileRouter from "./handler/profile";
 import { ZodError } from "zod";
+import morgan from "morgan";
+import logger from "./util/logger";
 // const middleware1 = (req: Request, res: Response, next: NextFunction) => {
 //   console.log("req param => ", req.params);
 //   next();
@@ -12,7 +14,7 @@ import { ZodError } from "zod";
 //   next();
 // };
 const app = express();
-
+app.use(morgan("dev")); //"dev" "common"
 // app.use(middleware1);
 // app.use(middleware2);
 // app.use(bodyParser.json())
@@ -22,12 +24,18 @@ app.use("/api/v1", studentRouter);
 app.use("/api/v1", profileRouter);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.log("catch error!");
+
   if (err instanceof ZodError) {
     res.status(400).json({
       message: err
     });
+    return;
   }
+  console.log("catch error!", err);
+  logger.error(err.message);
+  res.status(500).json({
+    message: "unecpected error",
+  });
   res.end();
 });
 

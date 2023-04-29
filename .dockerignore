@@ -1,0 +1,8 @@
+node_modules
+Dockerfile
+build
+coverage
+data
+log
+test
+.env
