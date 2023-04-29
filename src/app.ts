@@ -1,6 +1,8 @@
 import express, { NextFunction, Request, Response } from "express";
 import router from "./handler/user";
-
+import studentRouter from "./handler/student";
+import profileRouter from "./handler/profile";
+import { ZodError } from "zod";
 // const middleware1 = (req: Request, res: Response, next: NextFunction) => {
 //   console.log("req param => ", req.params);
 //   next();
@@ -13,16 +15,21 @@ const app = express();
 
 // app.use(middleware1);
 // app.use(middleware2);
-
+// app.use(bodyParser.json())
 app.use(express.json());
-
-app.use('/api/v1', router)
+app.use("/api/v1", router);
+app.use("/api/v1", studentRouter);
+app.use("/api/v1", profileRouter);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.log("catch error!");
+  if (err instanceof ZodError) {
+    res.status(400).json({
+      message: err
+    });
+  }
   res.end();
 });
-
 
 // app.get("/hello/:name", (req, res) => {
 //   res.json({
@@ -41,7 +48,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 //   });
 //   res.sendStatus(200);
 // });
-
 
 // app.get("/users", async (req, res) => {
 //   const users = await prisma.user.findMany();

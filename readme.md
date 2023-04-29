@@ -9,6 +9,8 @@ npm i -D @types/express
 npm i prisma
 npx prisma init
 
+npx ts-node prisma-test.ts 
+
 middleware => `ทำงานที่เป็น common ทำงานคล้ายกับ handler เลย แต่ handler มักจะเป็นตัวสุดท้ายของ business proj
 
 npx prisma format
@@ -16,6 +18,8 @@ npx prisma format
 npx prisma migrate dev
 
 npx prisma migrate reset //-> reset db
+
+
 
 create db
 docker-compose.yml
@@ -119,3 +123,18 @@ Hash Mac
 
 npm i jsonwebtoken
 npm i bcrypt
+
+
+http status code
+200 -> ok
+201 -> Created 
+202 -> Created without body 
+400 -> Client Error
+401 -> Unathotize
+403 -> Prohibit
+404 -> Not found
+422 -> Invaid Body
+500 -> Server Error
+
+
+npm i zod
